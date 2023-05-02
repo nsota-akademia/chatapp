@@ -8,7 +8,7 @@
 {% block content %}
 {% csrf_token %}
 {% for item in data %}
-<div onclick="location.href='{% url 'talk_room' item.username %}'"  class="user" method="POST" type="submit">
+<div onclick="location.href='{% url 'talk_room' item.pk %}'"  class="user" method="POST" type="submit">
     <div class="icon_box"><img src="/media/{{item.file}}" class="icon"></div>
     <div class="infomation">
         <p class="username">{{ item.username }}<p>

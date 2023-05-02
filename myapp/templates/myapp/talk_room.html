@@ -3,9 +3,9 @@
 {% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/talk_room.css' %}">{% endblock %}
 {% block header-title %}
 <div class="menu">
-    <div class="buttons"><button onclick="location.href='{% url 'friends'%}'">back</button></div>
+    <div class="buttons"><button class="br"onclick="location.href='{% url 'friends'%}'">戻る</button></div>
     <div class="friends_name">{{ friend_name }}</div>
-    <div class="buttons"><button onclick="location.href='{% url 'talk_room' friend_name%}'">更新</buttun></div>
+    <div class="buttons"><button class="br" onclick="location.href='{% url 'talk_room' pk %}'">更新</buttun></div>
 </div>
 {% endblock %}
 
@@ -14,10 +14,10 @@
 {% for item in data %}
 <div class="message">
     <div class="name_time">
-        {% if item.message_from == self_name %}
+        {% if item.message_from == self_pk %}
         <div class="name"><p> > 自分</p></div>
         {% else %}
-            <div class="name"><p> > {{item.message_from}}</p></div>
+            <div class="name"><p> > {{friend_name}}</p></div>
         {% endif %}
         <div class="time"><p>{{item.time}}</p></div>
     </div>
@@ -29,10 +29,10 @@
 {% endblock %}
 
 {% block new_footer %}
-<form action="{% url 'submit' friend_name %}" method="post">
+<form action="{% url 'submit' pk %}" method="post">
         {% csrf_token %}
         <div class = "input">{{form.as_p}}</div>
-        <div class="submit"><input type="submit"></div>
+        <div class="submit"><input type="submit" class="submit_button"></div>
 </form>
 {% endblock%}
 

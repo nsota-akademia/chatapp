@@ -33,6 +33,10 @@ form{
 .submit{
     width: 20%;
 }
+.submit_button{
+    width: 100px;
+    height: 50px;
+}
 .input{
     width: 80%;
     display: flex;
@@ -60,4 +64,8 @@ form{
 }
 .text{
     width: 100%;
+}
+.br{
+    width: 50px;
+    height: 30px;
 }

@@ -13,11 +13,13 @@
                 <hr>
             </div>
         </header>
-        {{form.login.errors}}
-        <form action = "{% url 'login' %}" method="post" >
+        <form action = "{% url 'login_view' %}" method="post" >
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit">ログイン</button>
-        </form> 
+        </form>
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}    
     </body>
 </html>
