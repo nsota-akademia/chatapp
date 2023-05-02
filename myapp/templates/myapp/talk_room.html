@@ -1,1 +1,38 @@
-TR
+{% extends "myapp/base.html" %}
+{% load static %}
+{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/talk_room.css' %}">{% endblock %}
+{% block header-title %}
+<div class="menu">
+    <div class="buttons"><button onclick="location.href='{% url 'friends'%}'">back</button></div>
+    <div class="friends_name">{{ friend_name }}</div>
+    <div class="buttons"><button onclick="location.href='{% url 'talk_room' friend_name%}'">更新</buttun></div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+{% for item in data %}
+<div class="message">
+    <div class="name_time">
+        {% if item.message_from == self_name %}
+        <div class="name"><p> > 自分</p></div>
+        {% else %}
+            <div class="name"><p> > {{item.message_from}}</p></div>
+        {% endif %}
+        <div class="time"><p>{{item.time}}</p></div>
+    </div>
+    <div class="text">
+        <p>{{item.message}}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block new_footer %}
+<form action="{% url 'submit' friend_name %}" method="post">
+        {% csrf_token %}
+        <div class = "input">{{form.as_p}}</div>
+        <div class="submit"><input type="submit"></div>
+</form>
+{% endblock%}
+

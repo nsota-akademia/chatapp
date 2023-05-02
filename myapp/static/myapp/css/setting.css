@@ -1,0 +1,19 @@
+.header{
+    background-color: #c5c3c4;
+}
+.footer-container{
+    background-color: #c5c3c4;
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100%;
+    justify-content: center;
+    flex-grow: 1;
+}
+.change_buttons{
+    width: 10%;
+    height: auto;
+    margin: auto;
+}

@@ -1,0 +1,21 @@
+{% extends "myapp/base.html" %}
+
+{% load static %}
+{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/friends.css' %}">{% endblock %}
+
+{% block header-title %}友達一覧{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+{% for item in data %}
+<div onclick="location.href='{% url 'talk_room' item.username %}'"  class="user" method="POST" type="submit">
+    <div class="icon_box"><img src="/media/{{item.file}}" class="icon"></div>
+    <div class="infomation">
+        <p class="username">{{ item.username }}<p>
+        <p>{{ item.email }}<p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+

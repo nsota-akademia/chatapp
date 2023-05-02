@@ -1,0 +1,63 @@
+.menu{
+    display: flex;
+    flex-direction: row;
+}
+.buttons{
+    width: 20%;
+}
+.friends_name{
+    width: 60%;
+}
+.header{
+    background-color: #c5c3c4;
+}
+
+.footer-container__item{
+    display: none;
+}
+.footer-container{
+    background-color: #c5c3c4;
+}
+.text-form{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.submit{
+    width: 20%;
+}
+.input{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+}
+.message{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+.name_time{
+    display: flex;
+    flex-direction: row;  
+}
+.neme{
+    flex-basis: 20%;
+    text-align: left;
+}
+.time{
+    flex-basis: 80%;
+    margin-right: 5%;
+    text-align: right;
+    flex-grow: 1;    
+}
+.text{
+    width: 100%;
+}
