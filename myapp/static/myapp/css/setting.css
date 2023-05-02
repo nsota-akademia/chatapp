@@ -17,3 +17,21 @@
     height: auto;
     margin: auto;
 }
+body{
+    overflow: hidden;
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 100vw;
+    text-align: center;
+}
+.change_buttons{
+    height: 10%;
+    width: 30vw;
+    
+  
+   
+    text-align: center;
+}
