@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os # 追加
 import environ # 追加
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ozyl(r!*=wht$a7^pp+wp=zg5g96yg5wz!7fwe$gq63874z9##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -51,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'intern.urls'
+ROOT_URLCONF = 'myapp.urls'
 
 TEMPLATES = [
     {
@@ -69,18 +70,22 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'intern.wsgi.application'
+WSGI_APPLICATION = 'chatapp.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'chatapp',
+#         'USER': 'nsota',
+#         'PASSWORD': 'sota1120',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -105,9 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -118,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -126,8 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "myapp.CustomUser"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media_local'
 
 LANGUAGE_CODE = 'ja'
 TIME_ZONE = 'Asia/Tokyo'
@@ -135,12 +139,61 @@ TIME_ZONE = 'Asia/Tokyo'
 LOGIN_URL = "index"
 LOGIN_REDIRECT_URL = "friends"
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
+
+load_dotenv()
 
 # デプロイ環境のための設定
-if os.path.isfile('.env'): # .envファイルが存在しない時にもエラーが発生しないようにする
+if os.path.isfile(os.path.join(BASE_DIR, '.env')): # .envファイルが存在しない時にもエラーが発生しないようにする.BASE_DIRを追記
     env = environ.Env(DEBUG=(bool, False),)
     environ.Env.read_env('.env')
-
     DEBUG = env('DEBUG')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+
+
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.ConsoleBackend")
+
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "no-reply@example.com")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+        },
+    },
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "handlers": {
+        "null": {
+            "level": "DEBUG",
+            "class": "logging.NullHandler",
+        },
+        "file": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR,"logs/django.log"),  # パスは環境に合わせて、ファイルは作る
+            "maxBytes": 1024 * 1024 * 512,
+            "backupCount": 10,
+            "formatter": "standard",
+        },
+        "console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "standard"},
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "include_html": True,
+            "filters": ["require_debug_false"],
+        },
+    },
+    "loggers": {
+        "django.security.DisallowedHost": {"handlers": ["null"], "propagate": False},
+        "django": {"handlers": ["file", "console", "mail_admins"], "level": "DEBUG", "propagate": True,},
+        "main": {"handlers": ["file", "console", "mail_admins"], "level": "DEBUG", "propagate": True,},
+    },
+}
