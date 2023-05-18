@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'myapp.urls'
+ROOT_URLCONF = 'chatapp.urls'
 
 TEMPLATES = [
     {
@@ -150,7 +150,6 @@ if os.path.isfile(os.path.join(BASE_DIR, '.env')): # .envファイルが存在�
     environ.Env.read_env('.env')
     DEBUG = env('DEBUG')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.ConsoleBackend")
 
