@@ -1,0 +1,25 @@
+{% extends "myapp/base.html" %}
+{% load static %}
+{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/signup.css' %}">{% endblock %}
+
+{% block header-title %}サインアップ{% endblock %}
+{% block active_signup %}active{% endblock %}
+
+{% block content %}
+<form action="{% url 'account_signup' %}" method="post" enctype = "multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">登録</button>
+    {% if redirect_field_value%}
+    <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/> 
+    {% endif %}
+</form>
+<!-- よくわからない -->
+{% for error in form.non_field_errors %}
+{{ error }}
+{% endfor %}
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

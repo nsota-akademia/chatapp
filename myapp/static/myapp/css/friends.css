@@ -31,4 +31,41 @@
 .header{
     background-color: #c5c3c4;
 }
-
+.my_icon{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: 5px;
+    border: solid 2px black;
+    
+}
+.self{
+    display: flex;
+    height: 100%;
+}
+h3{
+    margin-left: 10px;
+    margin-top: 0;
+    margin-bottom: 0
+}
+.search{
+    display: flex;
+    flex-direction: row;
+    background-color: grey;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.me{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-top: 8px;
+}
+.submit{
+    width: 80px;
+    height: 50px;
+    margin-left: 30px;
+}
+.form{
+    margin-left: 30%;
+}

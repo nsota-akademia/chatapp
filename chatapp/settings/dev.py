@@ -1,6 +1,8 @@
 import os
 
 from .base import *  
+from .utils import strtobool
+
 
 
 DATABASES = {
@@ -14,5 +16,4 @@ DATABASES = {
         }
 }
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_ROOT = BASE_DIR / 'media_local'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

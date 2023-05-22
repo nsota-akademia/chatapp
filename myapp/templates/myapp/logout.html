@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>Logout Success</title>
-    </head>
-    <body>
-        <header>
-            <div>
-                <h1>アカウントからログアウトしました</h1>
-                <hr>
-            </div>
-        </header>
-        <div>
-            <button onclick="location.href='{% url 'index' %}'">メイン画面</button><br>
-        </div>       
-    </body>
-</html>
-
+{% extends "myapp/base.html" %}
+{% load static %}
+{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/signup.css' %}">{% endblock %}
+{% block header-title %}ログアウト完了{% endblock %}
+{% block content %}
+<h1>お使いのアカウントからログアウトしました</h1>
+<button onclick="location.href='{% url 'index' %}'">メイン画面</button><br>
+{% endblock %}
+{% block footer %}
+{% endblock %}
