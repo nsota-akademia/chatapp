@@ -3,8 +3,10 @@
 {% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/signup.css' %}">{% endblock %}
 {% block header-title %}ログアウト完了{% endblock %}
 {% block content %}
+<div class="logout">
 <h1>お使いのアカウントからログアウトしました</h1>
-<button onclick="location.href='{% url 'index' %}'">メイン画面</button><br>
+<button onclick="location.href='{% url 'index' %}'">メインメニューへ</button><br>
+</div>
 {% endblock %}
 {% block footer %}
 {% endblock %}

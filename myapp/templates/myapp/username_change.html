@@ -1,11 +1,18 @@
 {% extends "myapp/base.html" %}
 {% load static %}
-{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/change_page.css' %}">{% endblock %}
+{% load django_bootstrap5 %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'myapp/css/change_page.css' %}">{% endblock %}
 {% block header-title %}ユーザーネーム変更{% endblock %}
 {% block content %}
-<form method="POST" action="{% url 'username_change' %}" >
-    {%csrf_token%}
-    <input type="text" name="new_username" required>
-    <input type="submit">
-</form>
+<div class="form">
+    <form method="post" action="{% url 'username_change' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button type="submit" content="変更"%}
+    </form>
+    {% for error in form.non_field_errors %}
+    {{ error }}
+    {% endfor %}
+</div>
 {% endblock %}

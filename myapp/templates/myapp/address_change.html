@@ -1,11 +1,15 @@
 {% extends "myapp/base.html" %}
 {% load static %}
-{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/change_page.css' %}">{% endblock %}
+{% load django_bootstrap5 %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'myapp/css/change_page.css' %}">{% endblock %}
 {% block header-title %}アドレス変更{% endblock %}
 {% block content %}
-<form method="POST" action="{% url 'address_change' %}" >
-    {%csrf_token%}
-    <input type="email" name="new_email" required>
-    <input type="submit">
-</form>
+<div class="form">
+    <form method="POST" action="{% url 'address_change' %}">
+        {%csrf_token%}
+        {% bootstrap_form form%}
+        {% bootstrap_button type="submit" content="変更" %}
+    </form>
+</div>
 {% endblock %}

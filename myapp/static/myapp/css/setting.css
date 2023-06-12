@@ -1,10 +1,13 @@
-.header{
-    background-color: #c5c3c4;
+.header {
+    background-color: skyblue;
 }
-.footer-container{
-    background-color: #c5c3c4;
+
+.footer-container {
+    background-color: skyblue;
+    border: 0;
 }
-.buttons{
+
+.buttons {
     display: flex;
     flex-direction: column;
     width: 100vw;
@@ -12,23 +15,50 @@
     justify-content: center;
     flex-grow: 1;
 }
-.change_buttons{
+
+.change_buttons {
     width: 10%;
     height: auto;
     margin: auto;
 }
-body{
+
+body {
     overflow: hidden;
 }
-.buttons{
+
+.buttons {
     display: flex;
     flex-direction: column;
     height: 80vh;
     width: 100vw;
     text-align: center;
 }
-.change_buttons{
+
+.change_buttons {
     height: 10%;
     width: 30vw;
     text-align: center;
+}
+
+.cn {
+    margin-top: 64px;
+}
+
+button {
+    margin: 10px;
+    width: 240px;
+    height: 150px;
+    margin-top: 10%;
+    border-radius: 100vh;
+    background-color: #0d6efd;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.5;
+    border: 2px solid #0d6efd
+}
+
+button:hover {
+    color: #0d6efd;
+    background-color: #fff;
 }

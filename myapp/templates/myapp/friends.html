@@ -1,58 +1,57 @@
 {% extends "myapp/base.html" %}
 
 {% load static %}
-{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/friends.css' %}">{% endblock %}
+{% load django_bootstrap5 %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'myapp/css/friends.css' %}">{% endblock %}
 
 {% block header %}
-    <header class="header">
-        <div class="header-container">
-            {% csrf_token %}
-            {% for item in me %}
-            <div class="self">
-                <img src="/media/{{item.file}}" class="my_icon">
-                <div class="me">
-                    <h3>{{ item.username }}<h3>
-                    <h3>{{ item.email }}<h3>
-                </div>
+<header class="header">
+    <div class="header-container">
+        {% csrf_token %}
+        {% for item in me %}
+        <div class="self">
+            {% if item.file %}
+            <img src="/media/{{item.file}}" class="my_icon">
+            {% else %}
+            <img src="/media/default.png" class="my_icon">
+            {% endif %}
+            <div class="me">
+                <h6>{{ item.username }}<h6>
+                        <h6>{{ item.email }}<h6>
             </div>
-            {% endfor %}
-            <span class="header-container__title">
-                {% block header-title %}友達一覧{% endblock %}
-            </span>
         </div>
-    </header>
+        {% endfor %}
+        <span class="header-container__title">
+            {% block header-title %}<div class="title">友達一覧</div>{% endblock %}
+        </span>
+    </div>
+    <div class="search">
+        <form action="{% url 'friends'%}" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form layout="horizontal" %}
+        </form>
+    </div>
+</header>
 {% endblock %}
-<div class="search">
-    <input type="text" placeholder="ユーザー名で検索">
-    <button>検索</button>
-</div>
+
 
 {% block content %}
-<form action="{% url 'friends'%}" method="post" class="search">
+<div class="cn">
     {% csrf_token %}
-    <div class="form">{{form.as_p}}</div>
-    <input type="submit" class="submit">
-</form>
-{% csrf_token %}
-{% for item in data %}
-<div onclick="location.href='{% url 'talk_room' item.pk %}'"  class="user" method="POST" type="submit">
-    <div class="icon_box"><img src="/media/{{item.file}}" class="icon"></div>
-    <div class="infomation">
-        <p class="username">{{ item.username }}<p>
-        <p>{{ item.email }}<p>
+    {% for item in data %}
+    <div onclick="location.href='{% url 'talk_room' item.pk %}'" class="user" method="POST" type="submit">
+        {% if item.file %}
+        <div class="icon_box"><img src="/media/{{item.file}}" class="icon"></div>
+        {% else %}
+        <div class="icon_box"><img src="/media/default.png" class="icon"></div>
+        {% endif %}
+        <div class="infomation">
+            <p class="username">{{ item.username }}<p>
+            <p class="detail">{{ item.email }}<p>
+            <p class="detail">{{item.latest_msg}}</p>
+        </div>
     </div>
 </div>
 {% endfor %}
 {% endblock %}
-
-<!-- {% for item in object_list %}
-<div onclick="location.href='{% url 'talk_room' item.pk %}'"  class="user" method="POST" type="submit">
-    <div class="icon_box"><img src="/media/{{item.file}}" class="icon"></div>
-    <div class="infomation">
-        <p class="username">{{ item.username }}<p>
-        <p>{{ item.email }}<p>
-    </div>
-</div>
-{% endfor %} -->
-
-

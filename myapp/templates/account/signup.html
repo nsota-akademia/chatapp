@@ -1,19 +1,22 @@
 {% extends "myapp/base.html" %}
 {% load static %}
+{% load django_bootstrap5 %}
 {% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/signup.css' %}">{% endblock %}
 
-{% block header-title %}サインアップ{% endblock %}
+{% block header-title %}<div class="title">サインアップ</div>{% endblock %}
 {% block active_signup %}active{% endblock %}
 
 {% block content %}
+<div class="form">
 <form action="{% url 'account_signup' %}" method="post" enctype = "multipart/form-data">
     {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">登録</button>
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="新規登録" %}
     {% if redirect_field_value%}
     <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/> 
     {% endif %}
 </form>
+</div>
 <!-- よくわからない -->
 {% for error in form.non_field_errors %}
 {{ error }}

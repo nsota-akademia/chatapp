@@ -1,14 +1,17 @@
 {% extends "myapp/base.html" %}
 {% load static %}
-{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/signup.css' %}">{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'myapp/css/signup.css' %}">{% endblock %}
 
 {% block header-title %}メールアドレス認証{% endblock %}
 
 
 
 {% block content %}
-<h1>メールアドレスを確認してください</h1>
-<button onclick="location.href='{% url 'index' %}'">メイン画面</button><br>
+<div class="txt">
+    <h3>メールアドレスを確認してください</h3>
+    <button onclick="location.href='{% url 'index' %}'">メイン画面</button><br>
+</div>
 {% block footer %}
 {% endblock %}
 {% endblock %}

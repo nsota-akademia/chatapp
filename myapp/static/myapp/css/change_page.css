@@ -1,6 +1,22 @@
 .header{
-    background-color: #c5c3c4;
+    background-color: lightskyblue;
 }
 .footer-container{
-    background-color: #c5c3c4;
+    background-color: lightskyblue;
+}
+.form{
+    margin-left: 30%;
+    margin-right: 30%;
+}
+form{
+    margin-top: 10%;
+}
+.txt{
+    text-align: center;
+}
+h1{
+    margin-top: 10%;
+}
+button{
+    margin-top: 20px;
 }

@@ -1,11 +1,14 @@
 {% extends "myapp/base.html" %}
 {% load static %}
+{% load django_bootstrap5 %}
 {% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/change_page.css' %}">{% endblock %}
 {% block header-title %}アイコン変更{% endblock %}
 {% block content %}
+<div class="form">
 <form method="POST" action="{% url 'icon_change' %}" enctype = "multipart/form-data">
     {%csrf_token%}
-    <input type="file" name="new_icon" required>
-    <input type="submit">
+    <input type="file" name="new_icon" class="form-control" required>
+    {% bootstrap_button type="submit" content="変更" %}
 </form>
+</div>
 {% endblock %}

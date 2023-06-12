@@ -1,6 +1,4 @@
-* {
-    box-sizing: border-box;
-}
+
 header{
     text-align: center;
 }
@@ -10,4 +8,14 @@ body{
 
 .footer{
     display: hidden;
+}
+.form{
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 5%;
+}
+
+
+p{
+    margin-top: 30px
 }

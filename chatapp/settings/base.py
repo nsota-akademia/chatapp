@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os # 追加
-import environ # 追加
+import os  # 追加
+import environ  # 追加
 from pathlib import Path
 from dotenv import load_dotenv
 from django.contrib.messages import constants as messages
@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-ozyl(r!*=wht$a7^pp+wp=zg5g96yg5wz!7fwe$gq63874z9##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
+# DEBUG = True
 
-#ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,13 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'myapp',
-    
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'debug_toolbar',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'chatapp.urls'
@@ -65,7 +68,7 @@ ROOT_URLCONF = 'chatapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'myapp','templates','account'),],
+        'DIRS': [os.path.join(BASE_DIR, 'myapp', 'templates', 'account'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,9 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 
-#TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -139,7 +142,6 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 LANGUAGE_CODE = 'ja'
 TIME_ZONE = 'Asia/Tokyo'
 
@@ -147,7 +149,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert alert-danger',
     messages.WARNING: 'alert alert-warning',
     messages.SUCCESS: 'alert alert-success',
-    messages.INFO: 'alert alert-info',    
+    messages.INFO: 'alert alert-info',
 }
 
 LOGGING = {
@@ -172,7 +174,8 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(BASE_DIR,"logs/django.log"),  # パスは環境に合わせて、ファイルは作る
+            # パスは環境に合わせて、ファイルは作る
+            "filename": os.path.join(BASE_DIR, "logs/django.log"),
             "maxBytes": 1024 * 1024 * 512,
             "backupCount": 10,
             "formatter": "standard",
@@ -187,34 +190,37 @@ LOGGING = {
     },
     "loggers": {
         "django.security.DisallowedHost": {"handlers": ["null"], "propagate": False},
-        "django": {"handlers": ["file", "console", "mail_admins"], "level": "DEBUG", "propagate": True,},
-        "main": {"handlers": ["file", "console", "mail_admins"], "level": "DEBUG", "propagate": True,},
+        "django": {"handlers": ["file", "console", "mail_admins"], "level": "DEBUG", "propagate": True, },
+        "main": {"handlers": ["file", "console", "mail_admins"], "level": "DEBUG", "propagate": True, },
     },
 }
 
 load_dotenv()
 
 # デプロイ環境のための設定
-if os.path.isfile(os.path.join(BASE_DIR, '.env')): # .envファイルが存在しない時にもエラーが発生しないようにする.BASE_DIRを追記
+# .envファイルが存在しない時にもエラーが発生しないようにする.BASE_DIRを追記
+if os.path.isfile(os.path.join(BASE_DIR, '.env')):
     env = environ.Env(DEBUG=(bool, False),)
     environ.Env.read_env('.env')
     DEBUG = env('DEBUG')
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-    
 
-EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.ConsoleBackend")
+
+EMAIL_BACKEND = os.getenv(
+    "EMAIL_BACKEND", "django.core.mail.backends.console.ConsoleBackend")
 
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "no-reply@example.com")
-#allauth用設定
+# allauth用設定
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# 認証方法の設定 
+# 認証方法の設定
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -222,7 +228,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 LOGIN_REDIRECT_URL = 'friends'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'index'
 
-ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_LOGOUT_ON_GET = True
 
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
@@ -236,3 +242,5 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'media_local'
+
+INTERNAL_IPS = ['127.0.0.1']

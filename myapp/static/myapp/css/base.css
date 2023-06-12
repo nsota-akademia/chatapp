@@ -1,25 +1,33 @@
-html{
+html {
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
 }
-body{
+
+body {
     margin: 0;
 }
 
+
+
 /* ヘッダー */
-.header{
+.header {
     width: 100vw;
     height: 64px;
-    border-bottom: solid 1px #9b9b9b;
+    background-color: lightskyblue;
+    border: 0;
+    position: fixed;
+    top: 0px;
 }
-.header-container{
+
+.header-container {
     position: relative;
     width: 90%;
     height: 100%;
     margin-left: auto;
     margin-right: auto;
 }
-.header-container__title{
+
+.header-container__title {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -34,11 +42,12 @@ body{
 }
 
 /* フッター */
-.footer{
+.footer {
     width: 100vw;
     height: 64px;
 }
-.footer-container{
+
+.footer-container {
     display: flex;
     position: fixed;
     bottom: 0;
@@ -47,7 +56,8 @@ body{
     text-align: center;
     border-top: solid 1px #9b9b9b;
 }
-.footer-container__item{
+
+.footer-container__item {
     display: flex;
     position: relative;
     width: 50%;
@@ -56,13 +66,15 @@ body{
     text-decoration: none;
     color: #9b9b9b;
 }
-.footer-item__link{
+
+.footer-item__link {
     width: 90%;
     height: 100%;
     margin: auto;
     text-decoration: none;
 }
-.footer-item__icon{
+
+.footer-item__icon {
     display: block;
     position: absolute;
     top: 35%;
@@ -70,7 +82,8 @@ body{
     transform: translate(-50%, -50%);
     line-height: 1.2rem;
 }
-.footer-item__text{
+
+.footer-item__text {
     position: absolute;
     top: 70%;
     left: 50%;
@@ -78,4 +91,12 @@ body{
     line-height: 0.8rem;
     font-size: 0.8rem;
     color: #000;
+}
+
+
+.title {
+    margin: 0;
+    font-weight: 800;
+    color: black;
+    font-size: 20pt;
 }
