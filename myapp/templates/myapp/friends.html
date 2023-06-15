@@ -47,9 +47,13 @@
         <div class="icon_box"><img src="/media/default.png" class="icon"></div>
         {% endif %}
         <div class="infomation">
-            <p class="username">{{ item.username }}<p>
-            <p class="detail">{{ item.email }}<p>
-            <p class="detail">{{item.latest_msg}}</p>
+            <p class="username">{{ item.username }}
+            <p>
+            <p class="detail">{{ item.email }}
+            <p>
+            <p class="detail">{{item.latest_msg}}
+            <div class="time">{{item.latest_msg_time}}</div>
+            </p>
         </div>
     </div>
 </div>

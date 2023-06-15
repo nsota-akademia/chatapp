@@ -7,7 +7,7 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, F,Subquery,OuterRef,When,Case,Value,IntegerField
+from django.db.models import Q, F, Subquery, OuterRef, When, Case, Value, IntegerField
 from django.db.models.functions import Greatest
 from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.urls import reverse_lazy
@@ -28,39 +28,39 @@ def friends(request):
             if form.cleaned_data["search"] == "":
                 data = CustomUser.objects.exclude(
                     Q(pk=self_pk) | Q(username="admin")
-                    ).annotate(
-                        latest_msg=
-                            Subquery(
-                                Messages.objects.filter(
-                                Q(
-                                    message_from=self_pk,message_to=OuterRef("pk")
-                                )| 
-                                Q(
-                                    message_from = OuterRef("pk"),message_to=self_pk
-                                )
-                            ).order_by("-time").values("message")[:1] ,
-                            ),
-                        
-                        latest_msg_time=
-                            Subquery(
-                                Messages.objects.filter(
-                                Q(
-                                    message_from=self_pk,message_to=OuterRef("pk")
-                                )| 
-                                Q(
-                                    message_from = OuterRef("pk"),message_to=self_pk
-                                )
-                            ).order_by("-time").values("time")[:1] #スライス
-                        ),
-                        blank=Case(
-                            When(latest_msg=None, then=Value(3)),
-                            When(latest_msg='', then=Value(2)),
-                            default=Value(1),
-                            output_field=IntegerField()
-                        ),
-                    ).order_by(
-                        "blank","-latest_msg_time","-date_joined"
-                    )
+                ).annotate(
+                    latest_msg=Subquery(
+                        Messages.objects.filter(
+                            Q(
+                                message_from=self_pk, message_to=OuterRef(
+                                    "pk")
+                            ) |
+                            Q(
+                                message_from=OuterRef("pk"), message_to=self_pk
+                            )
+                        ).order_by("-time").values("message")[:1],
+                    ),
+
+                    latest_msg_time=Subquery(
+                        Messages.objects.filter(
+                            Q(
+                                message_from=self_pk, message_to=OuterRef(
+                                    "pk")
+                            ) |
+                            Q(
+                                message_from=OuterRef("pk"), message_to=self_pk
+                            )
+                        ).order_by("-time").values("time")[:1]  # スライス
+                    ),
+                    blank=Case(
+                        When(latest_msg=None, then=Value(3)),
+                        When(latest_msg='', then=Value(2)),
+                        default=Value(1),
+                        output_field=IntegerField()
+                    ),
+                ).order_by(
+                    "blank", "-latest_msg_time", "-date_joined"
+                )
                 me = CustomUser.objects.filter(pk=self_pk).values(
                     "pk", "username", "email", "file")
                 params = {
@@ -73,28 +73,28 @@ def friends(request):
                 print(form.cleaned_data["search"])
                 data = CustomUser.objects.filter(Q(username__icontains=form.cleaned_data["search"]) | Q(
                     email__icontains=form.cleaned_data["search"])).exclude(Q(pk=self_pk) | Q(username="admin")).annotate(
-                        latest_msg=
-                            Subquery(
-                                Messages.objects.filter(
+                        latest_msg=Subquery(
+                            Messages.objects.filter(
                                 Q(
-                                    message_from=self_pk,message_to=OuterRef("pk")
-                                )| 
+                                    message_from=self_pk, message_to=OuterRef(
+                                        "pk")
+                                ) |
                                 Q(
-                                    message_from = OuterRef("pk"),message_to=self_pk
+                                    message_from=OuterRef("pk"), message_to=self_pk
                                 )
-                            ).order_by("-time").values("message")[:1] ,
-                            ),
-                        
-                        latest_msg_time=
-                            Subquery(
-                                Messages.objects.filter(
+                            ).order_by("-time").values("message")[:1],
+                        ),
+
+                        latest_msg_time=Subquery(
+                            Messages.objects.filter(
                                 Q(
-                                    message_from=self_pk,message_to=OuterRef("pk")
-                                )| 
+                                    message_from=self_pk, message_to=OuterRef(
+                                        "pk")
+                                ) |
                                 Q(
-                                    message_from = OuterRef("pk"),message_to=self_pk
+                                    message_from=OuterRef("pk"), message_to=self_pk
                                 )
-                            ).order_by("-time").values("time")[:1] #スライス
+                            ).order_by("-time").values("time")[:1]  # スライス
                         ),
                         blank=Case(
                             When(latest_msg=None, then=Value(3)),
@@ -102,9 +102,9 @@ def friends(request):
                             default=Value(1),
                             output_field=IntegerField()
                         ),
-                    ).order_by(
-                        "blank","-latest_msg_time","-date_joined"
-                    )
+                ).order_by(
+                        "blank", "-latest_msg_time", "-date_joined"
+                )
 
                 me = CustomUser.objects.filter(pk=self_pk).values(
                     "pk", "username", "email", "file")
@@ -120,36 +120,34 @@ def friends(request):
         data = CustomUser.objects.exclude(
             Q(pk=self_pk) | Q(username="admin")
         ).annotate(
-            latest_msg=
-                Subquery(
-                    Messages.objects.filter(
+            latest_msg=Subquery(
+                Messages.objects.filter(
                     Q(
-                        message_from=self_pk,message_to=OuterRef("pk")
-                    )| 
+                        message_from=self_pk, message_to=OuterRef("pk")
+                    ) |
                     Q(
-                        message_from = OuterRef("pk"),message_to=self_pk
+                        message_from=OuterRef("pk"), message_to=self_pk
                     )
-                ).order_by("-time").values("message")[:1] ,
+                ).order_by("-time").values("message")[:1],
             ),
-            latest_msg_time=
-                Subquery(
-                    Messages.objects.filter(
+            latest_msg_time=Subquery(
+                Messages.objects.filter(
                     Q(
-                        message_from=self_pk,message_to=OuterRef("pk")
-                    )| 
+                        message_from=self_pk, message_to=OuterRef("pk")
+                    ) |
                     Q(
-                        message_from = OuterRef("pk"),message_to=self_pk
+                        message_from=OuterRef("pk"), message_to=self_pk
                     )
-                ).order_by("-time").values("time")[:1] #スライス
+                ).order_by("-time").values("time")[:1]  # スライス
             ),
-        blank=Case(
-            When(latest_msg=None, then=Value(3)),
-            When(latest_msg='', then=Value(2)),
-            default=Value(1),
-            output_field=IntegerField()
-        ),
+            blank=Case(
+                When(latest_msg=None, then=Value(3)),
+                When(latest_msg='', then=Value(2)),
+                default=Value(1),
+                output_field=IntegerField()
+            ),
         ).order_by(
-            "blank","-latest_msg_time","-date_joined"
+            "blank", "-latest_msg_time", "-date_joined"
         )
         me = CustomUser.objects.filter(pk=self_pk).values(
             "pk", "username", "email", "file")
