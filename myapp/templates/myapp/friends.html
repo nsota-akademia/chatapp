@@ -40,7 +40,8 @@
 <div class="cn">
     {% csrf_token %}
     {% for item in data %}
-    <div onclick="location.href='{% url 'talk_room' item.pk %}'" class="user" method="POST" type="submit">
+    <div onclick="location.href='{% url 'talk_room' my_pk item.pk %}'" class="user" method="POST" type="submit"
+        id="{{ item.pk }}">
         {% if item.file %}
         <div class="icon_box"><img src="/media/{{item.file}}" class="icon"></div>
         {% else %}
@@ -58,4 +59,5 @@
     </div>
 </div>
 {% endfor %}
+<script src="{% static 'myapp/script/friends.js' %}"></script>
 {% endblock %}

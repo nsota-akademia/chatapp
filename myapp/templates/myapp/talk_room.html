@@ -1,42 +1,56 @@
 {% extends "myapp/base.html" %}
 {% load static %}
 {% load django_bootstrap5 %}
-{% block extra_style %}<link rel="stylesheet" href="{% static 'myapp/css/talk_room.css' %}">{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'myapp/css/talk_room.css' %}">{% endblock %}
 {% block header-title %}
 <div class="menu">
-    <div class="buttons"><button class="br"onclick="location.href='{% url 'friends'%}'">戻る</button></div>
-    <div class="friends_name">{{ friend_name }}</div>
-    <div class="buttons"><button class="br" onclick="location.href='{% url 'talk_room' pk %}'">更新</buttun></div>
+    <div class="buttons">
+        <button class="br" onclick="location.href='{% url 'friends'%}'">&lt;</button>
+    </div>
+    <div class="friends_name" id="friends_name">{{ friend_name }}</div>
+    <!-- <div class="buttons"><button class="br" onclick="location.href='{% url 'talk_room' my_pk pk %}'">更新</buttun> -->
+</div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="cn">
-{% csrf_token %}
-{% for item in data %}
-<div class="message">
-    <div class="name_time">
-        {% if item.message_from == self_pk %}
-        <div class="name"><p> > 自分</p></div>
-        {% else %}
-            <div class="name"><p> > {{friend_name}}</p></div>
-        {% endif %}
-        <div class="time"><p>{{item.time}}</p></div>
+<div class="cn" id="cn">
+    {% csrf_token %}
+    {% for item in data %}
+    <div class="message">
+        <div class="name_time">
+            {% if item.message_from == my_pk %}
+            <div class="name">
+                <p> > 自分</p>
+            </div>
+            {% else %}
+            <div class="name">
+                <p> > {{friend_name}}</p>
+            </div>
+            {% endif %}
+            <div class="time">
+                <p>{{item.time}}</p>
+            </div>
+        </div>
+        <div class="text">
+            <p>{{item.message}}</p>
+        </div>
     </div>
-    <div class="text">
-        <p>{{item.message}}</p>
-    </div>
+    {% endfor %}
 </div>
-{% endfor %}
-</div>
+<script src="{% static 'myapp/script/talkroom.js' %}"></script>
 {% endblock %}
 
 {% block new_footer %}
 
-<form action="{% url 'submit' pk %}" method="post">
+<form method="post">
     {% csrf_token %}
     {% bootstrap_form form layout="inline"%}
+    <!-- <input type="text" length=50 id="id_message"> -->
     <!-- {% bootstrap_button type="submit" content="送信" %} -->
 </form>
-
 {% endblock%}
+
+
+<!-- action="{% url 'submit' pk %}" -->

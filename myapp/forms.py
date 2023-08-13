@@ -7,7 +7,6 @@ class CustomSignupForm(SignupForm):
     file = forms.ImageField(required=True)
 
     def save(self, request):
-
         user = super(CustomSignupForm, self).save(request)
         if user:
             user.file = self.cleaned_data["file"]
@@ -41,13 +40,10 @@ class CustomPasswordChangeForm(ChangePasswordForm):
 
 
 class SearchForm(forms.Form):
-    search = forms.CharField(
-        max_length=200,
-        required=False,
-        label=""
-    )
+    search = forms.CharField(max_length=200, required=False, label="")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['search'].widget.attrs.update(
-            {'placeholder': 'Search by email or username'})
+        self.fields["search"].widget.attrs.update(
+            {"placeholder": "Search by email or username"}
+        )
