@@ -44,7 +44,9 @@ document.addEventListener("DOMContentLoaded", function () {
             var friendname = "> " + document.getElementById("friends_name").textContent;
             p_name.textContent = friendname;
         }
-    
+        var element = document.documentElement;
+        var bottom = element.scrollHeight - element.clientHeight;
+        window.scroll(0, bottom);
     }
     document.getElementById("id_message").addEventListener("keydown", function (e) {
         if (e.keyCode === 13) {

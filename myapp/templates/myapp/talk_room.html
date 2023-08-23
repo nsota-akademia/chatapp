@@ -43,14 +43,8 @@
 {% endblock %}
 
 {% block new_footer %}
-
-<form method="post">
-    {% csrf_token %}
-    {% bootstrap_form form layout="inline"%}
-    <!-- <input type="text" length=50 id="id_message"> -->
-    <!-- {% bootstrap_button type="submit" content="送信" %} -->
-</form>
+<div id="form">
+    <input type="text" length=50 id="id_message">
+</div>
 {% endblock%}
 
-
-<!-- action="{% url 'submit' pk %}" -->

@@ -1,9 +1,7 @@
 import json
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from asgiref.sync import async_to_sync
 from .models import Messages
-import datetime
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -11,18 +9,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
         my_pk = int(self.scope["url_route"]["kwargs"]["my_pk"])
         pk = int(self.scope["url_route"]["kwargs"]["pk"])
         if my_pk > pk:
-            my_pk=str(my_pk).ljust(8,'0')
-            my_pk=int(my_pk)
-            pk=str(pk).ljust(8,'0')
-            pk=int(pk)
-            self.room_name = str(my_pk * 100000000 + pk)
+            my_pk = str(my_pk).ljust(6 ,'0')
+            my_pk = int(my_pk)
+            pk = str(pk).ljust(6 ,'0')
+            pk = int(pk)
+            self.room_name = str(my_pk * 1000000 + pk)
             self.room_group_name = "chat_%s" % self.room_name
         else:
-            my_pk=str(my_pk).ljust(8,'0')
-            my_pk=int(my_pk)
-            pk=str(pk).ljust(8,'0')
-            pk=int(pk)
-            self.room_name = str(pk * 100000000 + my_pk)
+            my_pk = str(my_pk).ljust(6 ,'0')
+            my_pk = int(my_pk)
+            pk = str(pk).ljust(6 ,'0')
+            pk = int(pk)
+            self.room_name = str(pk * 1000000 + my_pk)
             self.room_group_name = "chat_%s" % self.room_name
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
@@ -38,10 +36,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         friendID = text_data_json["friendID"]
         myID = int(myID)
         friendID = int(friendID)
-        await self.channel_layer.group_send(self.room_group_name, {"type" : "chat_message", "message" : message, "myID" : myID, "friendID" : friendID})
+        await self.channel_layer.group_send(self.room_group_name, {"type": "chat_message", "message": message, "myID": myID, "friendID": friendID})
 
     @database_sync_to_async
-    def save(self,message,myID,friendID):
+    def save(self, message, myID, friendID):
         Messages.objects.create(
             message_from=myID,
             message_to=friendID,
@@ -52,5 +50,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = event["message"]
         myID = event["myID"]
         friendID = event["friendID"]
-        await self.save(message,myID,friendID)
-        await self.send(text_data=json.dumps({"message": message, "myID" : myID, "friendID" : friendID}))
+        await self.save(message, myID, friendID)
+        await self.send(text_data=json.dumps({"message": message, "myID": myID, "friendID": friendID}))

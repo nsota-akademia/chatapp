@@ -118,3 +118,17 @@ form {
 #lt {
     padding-bottom: 40px;
 }
+
+#form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: right;
+    text-align: right;
+}
+
+#id_message{
+    width: 30%;
+    margin-left: 65%;
+    margin-right: 5%;
+}

@@ -2,7 +2,6 @@ from typing import Any, Dict
 from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
 from .forms import (
-    MessagesForm,
     CustomPasswordChangeForm,
     SearchForm,
     UsernameChangeForm,
@@ -177,7 +176,6 @@ def friends(request):
 
 @login_required
 def talk_room(request,my_pk,pk):
-    form = MessagesForm(request.POST)
     self_pk = int(request.user.pk)
     self_name = request.user.username
     data = Messages.objects.filter(
@@ -192,7 +190,6 @@ def talk_room(request,my_pk,pk):
         "friend_name": friend_name,
         "self_name": self_name,
         "my_pk": self_pk,
-        "form": form,
         "data": data,
     }
     return render(request, "myapp/talk_room.html", params)
